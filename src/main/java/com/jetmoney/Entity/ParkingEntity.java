@@ -7,7 +7,7 @@ import java.security.Timestamp;
 
 @Entity
 @Table (name = "PitStopEntity")
-public class PitStopEntity {
+public class ParkingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,16 +21,16 @@ public class PitStopEntity {
     @ManyToOne
     CarEntity carEntity;
 
-    public PitStopEntity() {
+    public ParkingEntity() {
     }
 
-    public PitStopEntity(Timestamp dateIn, CarEntity carEntity, BigDecimal money) {
+    public ParkingEntity(Timestamp dateIn, CarEntity carEntity, BigDecimal money) {
         this.dateIn = dateIn;
         this.carEntity = carEntity;
         this.money = money;
     }
 
-    public PitStopEntity(Timestamp dateIn, CarEntity carEntity) {
+    public ParkingEntity(Timestamp dateIn, CarEntity carEntity) {
         this.dateIn = dateIn;
         this.carEntity = carEntity;
     }
@@ -72,7 +72,7 @@ public class PitStopEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PitStopEntity that = (PitStopEntity) o;
+        ParkingEntity that = (ParkingEntity) o;
 
         if (dateIn != null ? !dateIn.equals(that.dateIn) : that.dateIn != null) return false;
         if (dateOut != null ? !dateOut.equals(that.dateOut) : that.dateOut != null) return false;

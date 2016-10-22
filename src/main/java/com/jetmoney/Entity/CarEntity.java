@@ -18,7 +18,7 @@ public class CarEntity {
     private String brandName;
 
     @OneToMany
-    private Set<PitStopEntity> pitStopEntitySet;
+    private Set<ParkingEntity> parkingEntitySet;
 
     public CarEntity() {
     }
@@ -60,7 +60,7 @@ public class CarEntity {
 
         if (number != null ? !number.equals(carEntity.number) : carEntity.number != null) return false;
         if (brandName != null ? !brandName.equals(carEntity.brandName) : carEntity.brandName != null) return false;
-        return pitStopEntitySet != null ? pitStopEntitySet.equals(carEntity.pitStopEntitySet) : carEntity.pitStopEntitySet == null;
+        return parkingEntitySet != null ? parkingEntitySet.equals(carEntity.parkingEntitySet) : carEntity.parkingEntitySet == null;
 
     }
 
@@ -68,7 +68,7 @@ public class CarEntity {
     public int hashCode() {
         int result = number != null ? number.hashCode() : 0;
         result = 31 * result + (brandName != null ? brandName.hashCode() : 0);
-        result = 31 * result + (pitStopEntitySet != null ? pitStopEntitySet.hashCode() : 0);
+        result = 31 * result + (parkingEntitySet != null ? parkingEntitySet.hashCode() : 0);
         return result;
     }
 }

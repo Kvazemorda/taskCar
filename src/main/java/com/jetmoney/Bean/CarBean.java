@@ -9,7 +9,6 @@ import java.util.List;
 
 @Stateless
 public class CarBean {
-
     @PersistenceContext(unitName = "DataSourceEx")
     private EntityManager entityManager;
 
@@ -23,4 +22,5 @@ public class CarBean {
     public void save(CarEntity car){
             entityManager.persist(car);
     }
+
 }

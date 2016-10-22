@@ -1,7 +1,7 @@
 package com.jetmoney.Bean;
 
 import com.jetmoney.Entity.CarEntity;
-import com.jetmoney.Entity.PitStopEntity;
+import com.jetmoney.Entity.ParkingEntity;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -11,8 +11,8 @@ import java.math.BigDecimal;
 import java.security.Timestamp;
 
 @Stateless
-public class PitStopBean {
-    @PersistenceContext(unitName = "Datasourceex")
+public class ParkingBean {
+    @PersistenceContext(unitName = "DataSourceEx")
     private EntityManager entityManager;
 
     /**
@@ -21,8 +21,8 @@ public class PitStopBean {
      * @param in date go in pitStop
      */
     public void savePitStopIn(CarEntity carEntity, Timestamp in){
-        PitStopEntity pitStopEntity = new PitStopEntity(in, carEntity);
-        entityManager.persist(pitStopEntity);
+        ParkingEntity parkingEntity = new ParkingEntity(in, carEntity);
+        entityManager.persist(parkingEntity);
     }
 
     /**
@@ -31,15 +31,15 @@ public class PitStopBean {
      * @param out time out
      */
     public void carGoOutFromPitStop(CarEntity carEntity, Timestamp out){
-        String ql = "select distinct pitStop from PitStopEntity pitStop " +
+        String ql = "select distinct pitStop from ParkingEntity pitStop " +
                 "where pitStop.carEntity = :car " +
                 "and dateOut is null";
         Query query = entityManager.createQuery(ql);
         query.setParameter("car", carEntity);
-        PitStopEntity pitStopEntity = (PitStopEntity) query.getSingleResult();
-        pitStopEntity.setDateOut(out);
-        pitStopEntity.setMoney(getCostParking(pitStopEntity.getDateIn(), out));
-        entityManager.refresh(pitStopEntity);
+        ParkingEntity parkingEntity = (ParkingEntity) query.getSingleResult();
+        parkingEntity.setDateOut(out);
+        parkingEntity.setMoney(getCostParking(parkingEntity.getDateIn(), out));
+        entityManager.refresh(parkingEntity);
     }
 
     /**
