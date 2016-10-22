@@ -1,7 +1,9 @@
 package com.jetmoney.Entity;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.math.BigDecimal;
+import java.security.Timestamp;
+
 
 @Entity
 @Table (name = "PitStopEntity")
@@ -11,28 +13,41 @@ public class PitStopEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
     @Column
-    Date dateIn;
+    Timestamp dateIn;
     @Column
-    Date dateOut;
+    Timestamp dateOut;
+    @Column
+    BigDecimal money;
     @ManyToOne
     CarEntity carEntity;
 
     public PitStopEntity() {
     }
 
-    public Date getDateIn() {
+    public PitStopEntity(Timestamp dateIn, CarEntity carEntity, BigDecimal money) {
+        this.dateIn = dateIn;
+        this.carEntity = carEntity;
+        this.money = money;
+    }
+
+    public PitStopEntity(Timestamp dateIn, CarEntity carEntity) {
+        this.dateIn = dateIn;
+        this.carEntity = carEntity;
+    }
+
+    public Timestamp getDateIn() {
         return dateIn;
     }
 
-    public void setDateIn(Date dateIn) {
+    public void setDateIn(Timestamp dateIn) {
         this.dateIn = dateIn;
     }
 
-    public Date getDateOut() {
+    public Timestamp getDateOut() {
         return dateOut;
     }
 
-    public void setDateOut(Date dateOut) {
+    public void setDateOut(Timestamp dateOut) {
         this.dateOut = dateOut;
     }
 
@@ -42,6 +57,14 @@ public class PitStopEntity {
 
     public void setCarEntity(CarEntity carEntity) {
         this.carEntity = carEntity;
+    }
+
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
     }
 
     @Override
