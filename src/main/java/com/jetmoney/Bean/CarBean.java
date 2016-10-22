@@ -16,7 +16,7 @@ public class CarBean {
     public CarBean() {
     }
 
-    public List<String> getAllCars(){
+    public List<CarEntity> getAllCars(){
         return entityManager.createQuery("select car from CarEntity car").getResultList();
     }
 
