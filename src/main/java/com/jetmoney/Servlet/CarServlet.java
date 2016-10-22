@@ -23,8 +23,8 @@ public class CarServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         try{
+
             PrintWriter out = resp.getWriter();
             out.println("prinln " + carBean.getAllCars());
 
