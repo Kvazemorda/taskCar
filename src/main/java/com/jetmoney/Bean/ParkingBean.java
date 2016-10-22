@@ -8,7 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.math.BigDecimal;
-import java.security.Timestamp;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Stateless
 public class ParkingBean {
@@ -30,7 +31,7 @@ public class ParkingBean {
      * @param carEntity some car
      * @param out time out
      */
-    public void carGoOutFromPitStop(CarEntity carEntity, Timestamp out){
+    public void carGoOutFromPitStop(CarEntity carEntity, Date out){
         String ql = "select distinct pitStop from ParkingEntity pitStop " +
                 "where pitStop.carEntity = :car " +
                 "and dateOut is null";
@@ -48,8 +49,8 @@ public class ParkingBean {
      * @param out timestamp out pitstop
      * @return cost by parking
      */
-    private BigDecimal getCostParking(Timestamp in, Timestamp out){
+    private BigDecimal getCostParking(Date in, Date out){
 
-        return new BigDecimal(Math.floor ((out.getTimestamp().getTime() - in.getTimestamp().getTime())/(1000*60))*100);
+        return new BigDecimal(Math.floor ((out.getTime() - in.getTime())/(1000*60))*100);
     }
 }

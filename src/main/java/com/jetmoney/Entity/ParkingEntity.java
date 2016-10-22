@@ -2,7 +2,7 @@ package com.jetmoney.Entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.security.Timestamp;
+import java.util.Date;
 
 
 @Entity
@@ -13,9 +13,9 @@ public class ParkingEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
     @Column
-    Timestamp dateIn;
+    Date dateIn;
     @Column
-    Timestamp dateOut;
+    Date dateOut;
     @Column
     BigDecimal money;
     @ManyToOne
@@ -24,30 +24,30 @@ public class ParkingEntity {
     public ParkingEntity() {
     }
 
-    public ParkingEntity(Timestamp dateIn, CarEntity carEntity, BigDecimal money) {
+    public ParkingEntity(Date dateIn, CarEntity carEntity, BigDecimal money) {
         this.dateIn = dateIn;
         this.carEntity = carEntity;
         this.money = money;
     }
 
-    public ParkingEntity(Timestamp dateIn, CarEntity carEntity) {
+    public ParkingEntity(Date dateIn, CarEntity carEntity) {
         this.dateIn = dateIn;
         this.carEntity = carEntity;
     }
 
-    public Timestamp getDateIn() {
+    public Date getDateIn() {
         return dateIn;
     }
 
-    public void setDateIn(Timestamp dateIn) {
+    public void setDateIn(Date dateIn) {
         this.dateIn = dateIn;
     }
 
-    public Timestamp getDateOut() {
+    public Date getDateOut() {
         return dateOut;
     }
 
-    public void setDateOut(Timestamp dateOut) {
+    public void setDateOut(Date dateOut) {
         this.dateOut = dateOut;
     }
 
