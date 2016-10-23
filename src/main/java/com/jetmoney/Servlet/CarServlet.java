@@ -1,6 +1,7 @@
 package com.jetmoney.Servlet;
 
 import com.jetmoney.Bean.CarBean;
+import com.jetmoney.Bean.CarDriver;
 import com.jetmoney.Bean.PlaceParkingBean;
 import com.jetmoney.Entity.CarEntity;
 
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +21,7 @@ public class CarServlet extends HttpServlet {
     List<CarEntity> listCars;
     public static final int pitStopMax = 10;
     public static int freePlaceOnParking;
+    public static Date today;
     @EJB
     private CarBean carBean;
     @EJB
@@ -34,22 +35,23 @@ public class CarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try{
-            //check free place in parking
             Date date = new Date();
             int carInParking = placeParkingBean.getCarsInPitStop(date);
+            //check free place in parking
             freePlaceOnParking = pitStopMax - carInParking;
-
-            PrintWriter writer = resp.getWriter();
-            writer.println(freePlaceOnParking);
-
-            listCars = carBean.getAllCars();
-            System.out.println(listCars);
-            writer.close();
+            //start cars
+            startCarDriver();
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
+    //start driving cars in backgroun thread
+    private void startCarDriver(){
+        Thread carDriverThread = new Thread(new CarDriver());
+        carDriverThread.setDaemon(true);
+        carDriverThread.start();
+    }
 
 
 }

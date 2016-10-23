@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Stateless
@@ -21,7 +20,7 @@ public class ParkingBean {
      * @param carEntity car
      * @param in date go in pitStop
      */
-    public void savePitStopIn(CarEntity carEntity, Timestamp in){
+    public void savePitStopIn(CarEntity carEntity, Date in){
         ParkingEntity parkingEntity = new ParkingEntity(in, carEntity);
         entityManager.persist(parkingEntity);
     }
