@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.List;
 
 @Stateless
 public class CarBean {
@@ -16,26 +15,31 @@ public class CarBean {
     public CarBean() {
     }
 
-    public List<CarEntity> getAllCars(){
-        return entityManager.createQuery("select car from CarEntity car").getResultList();
-    }
-
-    public boolean isCarInParking(String number){
+    public boolean isCarInParking(String number) {
         String hql = "select count(*) from ParkingEntity parking " +
                 "where parking.carEntity.number = :number " +
                 "and parking.dateOut is null";
 
         Query query = entityManager.createQuery(hql);
         query.setParameter("number", number);
-        if(query.getResultList().size() > 1){
+        if (query.getResultList().size() > 1) {
             System.out.println("Attention same cars in parking is " + query.getResultList().size());
         }
-        boolean car = ((long)query.getSingleResult() == 1) ? true : false;
-        return  car;
+        boolean car = ((long) query.getSingleResult() == 1) ? true : false;
+        return car;
     }
 
-    public void save(CarEntity car){
-            entityManager.persist(car);
+    public void save(CarEntity car) {
+        entityManager.persist(car);
     }
 
+    public CarEntity getCar(String number) {
+        String hql = "select parking.carEntity from ParkingEntity parking " +
+                "where parking.carEntity.number = :number " +
+                "and parking.dateOut is null";
+
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("number", number);
+        return (CarEntity) query.getSingleResult();
+    }
 }

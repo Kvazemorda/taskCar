@@ -11,6 +11,7 @@
 <form action = "listCar" method = "get">
     <b>free place: </b>${freePlace}
     (<a href="carIn.jsp">Add car in parking</a>)
+    (<a href="getCar.jsp">Check car in parking</a>)
 <ol>
     <c:forEach items="${cars}" var="ParkingEntity">
         <li>
