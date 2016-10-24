@@ -50,25 +50,4 @@ public class CarEntity {
                 ", brandName='" + brandName + '\'' +
                 '}';
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        CarEntity carEntity = (CarEntity) o;
-
-        if (number != null ? !number.equals(carEntity.number) : carEntity.number != null) return false;
-        if (brandName != null ? !brandName.equals(carEntity.brandName) : carEntity.brandName != null) return false;
-        return parkingEntitySet != null ? parkingEntitySet.equals(carEntity.parkingEntitySet) : carEntity.parkingEntitySet == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = number != null ? number.hashCode() : 0;
-        result = 31 * result + (brandName != null ? brandName.hashCode() : 0);
-        result = 31 * result + (parkingEntitySet != null ? parkingEntitySet.hashCode() : 0);
-        return result;
-    }
 }

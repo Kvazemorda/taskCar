@@ -67,24 +67,4 @@ public class ParkingEntity {
         this.money = money;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ParkingEntity that = (ParkingEntity) o;
-
-        if (dateIn != null ? !dateIn.equals(that.dateIn) : that.dateIn != null) return false;
-        if (dateOut != null ? !dateOut.equals(that.dateOut) : that.dateOut != null) return false;
-        return carEntity != null ? carEntity.equals(that.carEntity) : that.carEntity == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = dateIn != null ? dateIn.hashCode() : 0;
-        result = 31 * result + (dateOut != null ? dateOut.hashCode() : 0);
-        result = 31 * result + (carEntity != null ? carEntity.hashCode() : 0);
-        return result;
-    }
 }

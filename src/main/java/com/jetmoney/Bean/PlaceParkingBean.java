@@ -1,10 +1,13 @@
 package com.jetmoney.Bean;
 
+import com.jetmoney.Entity.ParkingEntity;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.Date;
+import java.util.List;
 
 
 @Stateless
@@ -16,22 +19,32 @@ public class PlaceParkingBean {
     }
 
     /**
-     * Get count car it pitStop
-     * @param today how many cars in pitStop currently
+     * Get list car in pitStop
      * @return int cars in pit stop
      */
-    public int getCarsInPitStop(Date today){
-        String hql = "select count(*) from ParkingEntity carOnPitStop " +
-                "where carOnPitStop.dateIn <= :timeNow " +
-                "and (carOnPitStop.dateOut > :timeNow " +
-                "or carOnPitStop.dateOut is null)";
+    public List<ParkingEntity> getCarsInPitStop(){
+        String hql = "select carOnPitStop from ParkingEntity carOnPitStop " +
+                "where carOnPitStop.dateOut is null " +
+                "and carOnPitStop.dateIn is not null";
 
         Query query = entityManager.createQuery(hql);
-        query.setParameter("timeNow", today);
-        System.out.println("car on place " + query.getResultList());
-        int carOnPlace =  Integer.parseInt(query.getSingleResult().toString());
-
-        return  carOnPlace;
+        List<ParkingEntity> carInPark =  query.getResultList();
+        return  carInPark;
     }
 
+    /**
+     * get last date car out from parking
+     * @return last date out
+     */
+    public Date getLastDate(){
+        String hql = "select max(parking.dateOut) from ParkingEntity parking";
+
+        Query query = entityManager.createQuery(hql);
+        Date date = (Date) query.getSingleResult();
+        if (date == null){
+            return new Date();
+        }else {
+            return date;
+        }
+    }
 }
