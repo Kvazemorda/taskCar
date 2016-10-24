@@ -21,7 +21,6 @@ public class GetCarServlet extends HttpServlet {
     private PlaceParkingBean parkingBean;
     @EJB
     private CarBean carBean;
-
     public GetCarServlet() {
 
     }
