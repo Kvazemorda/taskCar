@@ -20,13 +20,13 @@ public class CarBean {
         return entityManager.createQuery("select car from CarEntity car").getResultList();
     }
 
-    public boolean isCarInParking(CarEntity carEntity){
+    public boolean isCarInParking(String number){
         String hql = "select count(*) from ParkingEntity parking " +
-                "where parking.carEntity = :car " +
+                "where parking.carEntity.number = :number " +
                 "and parking.dateOut is null";
 
         Query query = entityManager.createQuery(hql);
-        query.setParameter("car", carEntity);
+        query.setParameter("number", number);
         if(query.getResultList().size() > 1){
             System.out.println("Attention same cars in parking is " + query.getResultList().size());
         }

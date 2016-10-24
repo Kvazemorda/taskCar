@@ -67,4 +67,7 @@ public class ParkingEntity {
         this.money = money;
     }
 
+    public long getId() {
+        return id;
+    }
 }

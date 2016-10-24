@@ -5,11 +5,14 @@
     <title>Car go in parking</title>
 </head>
 <body>
-    <form action = "carIn" method = "post">
+    <form action = "listCar" method = "post">
         <label for = "number"> Input number car:
-            <input type = "text" id = "number" value=" " name = "number">
-            <input type="submit" value="save" />
+            <input type = "text" id = "number" value="${CarEntity.number}" name = "number">
+        </label>
+        <label for = "brandName"> Input brand name car:
+            <input type = "text" id = "brandName" value="${CarEntity.brandName}" name = "brandName">
         </label> <br/>
+        <input type ="submit" value="save" />
     </form>
 </body>
 </html>

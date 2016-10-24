@@ -1,11 +1,14 @@
 package com.jetmoney.Bean;
 
+import com.jetmoney.Entity.CarEntity;
 import com.jetmoney.Entity.ParkingEntity;
+import com.jetmoney.Servlet.CarServlet;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -33,18 +36,44 @@ public class PlaceParkingBean {
     }
 
     /**
-     * get last date car out from parking
-     * @return last date out
+     * Car go into pitstop
+     * @param carEntity car
+     * @param in date go in pitStop
      */
-    public Date getLastDate(){
-        String hql = "select max(parking.dateOut) from ParkingEntity parking";
-
-        Query query = entityManager.createQuery(hql);
-        Date date = (Date) query.getSingleResult();
-        if (date == null){
-            return new Date();
-        }else {
-            return date;
+    public void savePitStopIn(CarEntity carEntity, Date in){
+        if(CarServlet.freePlaceOnParking > 0) {
+            ParkingEntity parkingEntity = new ParkingEntity(in, carEntity);
+            entityManager.persist(parkingEntity);
         }
+    }
+
+    /**
+     * Car go out from pitStop and account money
+     * @param id id pitStop
+     * @param out time out
+     */
+    public void carGoOutFromPitStop(long id, Date out){
+        String ql = "select distinct pitStop from ParkingEntity pitStop " +
+                "where pitStop.id = :id " +
+                "and dateOut is null";
+        Query query = entityManager.createQuery(ql);
+        query.setParameter("id", id);
+        ParkingEntity parkingEntity = (ParkingEntity) query.getSingleResult();
+        parkingEntity.setDateOut(out);
+        parkingEntity.setMoney(getCostParking(parkingEntity.getDateIn(), out));
+        entityManager.merge(parkingEntity);
+    }
+
+    /**
+     *
+     * @param in timestamp into pitstop
+     * @param out timestamp out pitstop
+     * @return cost by parking
+     */
+    private BigDecimal getCostParking(Date in, Date out){
+        double time = out.getTime() - in.getTime();
+        double hour = 3600000.0;
+        double hours = Math.ceil(time/hour) * 100;
+        return new BigDecimal(hours);
     }
 }
