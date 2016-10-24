@@ -40,6 +40,11 @@ public class CarBean {
 
         Query query = entityManager.createQuery(hql);
         query.setParameter("number", number);
-        return (CarEntity) query.getSingleResult();
+        CarEntity carEntity = (CarEntity) query.getSingleResult();
+        if(carEntity == null){
+            return null;
+        }else{
+            return carEntity;
+        }
     }
 }

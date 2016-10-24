@@ -28,20 +28,20 @@ public class GetCarServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try{
-
+        try {
             String number = req.getParameter("number");
-            CarEntity carEntity = carBean.getCar(number);
+            if (req.getParameter("number") != null && req.getParameter("number") != "") {
+                CarEntity carEntity = carBean.getCar(number);
+                if (carEntity != null) {
+                    req.setAttribute("car", carEntity);
+                    req.setAttribute("carThis", "car in parking");
+                    // отправляем request на jsp
+                    req.getRequestDispatcher("/getCar.jsp").forward(req, resp);
+                }
+            }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
 
-            req.setAttribute("car", carEntity);
-
-            // отправляем request на jsp
-            req.getRequestDispatcher("/getCar.jsp").forward(req, resp);
-
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
-
 }
